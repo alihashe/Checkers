@@ -10,7 +10,7 @@ class Piece:
         self.row = row
         self.col = col
         self.color = color
-        self.king = True
+        self.king = False
 
         if self.color == RED:
             self.direction = -1
@@ -37,6 +37,12 @@ class Piece:
         pygame.draw.circle(wind, self.color, (self.x, self.y), radius)
         if self.king:
             wind.blit(CROWN, (self.x - CROWN.get_width()//2, self.y - CROWN.get_height()//2))
+
+    def move(self, row, col):
+        """Updates location information for a piece."""
+        self.row = row
+        self.col = col
+        self.calc_pos()
 
     def __repr__(self):
         return str(self.color)
