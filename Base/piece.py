@@ -2,7 +2,7 @@ import pygame
 from .constants import RED, WHITE, GREY, SQUARE_SIZE
 
 class Piece:
-    PADDING = 10
+    PADDING = 12
     OUTLINE = 2
 
 
