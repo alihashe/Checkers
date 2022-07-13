@@ -1,5 +1,5 @@
 import pygame
-from .constants import RED, WHITE, GREY, SQUARE_SIZE
+from .constants import RED, WHITE, GREY, CROWN, SQUARE_SIZE
 
 class Piece:
     PADDING = 12
@@ -10,7 +10,7 @@ class Piece:
         self.row = row
         self.col = col
         self.color = color
-        self.king = False
+        self.king = True
 
         if self.color == RED:
             self.direction = -1
@@ -35,6 +35,8 @@ class Piece:
         radius = SQUARE_SIZE//2 - self.PADDING
         pygame.draw.circle(wind, GREY, (self.x, self.y), radius + self.OUTLINE)
         pygame.draw.circle(wind, self.color, (self.x, self.y), radius)
+        if self.king:
+            wind.blit(CROWN, (self.x - CROWN.get_width()//2, self.y - CROWN.get_height()//2))
 
     def __repr__(self):
         return str(self.color)
