@@ -1,10 +1,11 @@
 import pygame
-from Base.constants import SQUARE_SIZE, WIDTH, HEIGHT
+from Base.constants import SQUARE_SIZE, WIDTH, HEIGHT, RED
 from Base.board import Board
+from Base.game import Game
 
 FPS = 60
 
-WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+WIND = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Checkers')
 
 def get_from_mouse(pos):
@@ -17,9 +18,7 @@ def get_from_mouse(pos):
 def main():
     run = True
     clock = pygame.time.Clock()
-    board = Board()
-
-    piece = board.pick_piece(0,1)
+    game = Game(WIND)
 
     while run:
         clock.tick(FPS)
@@ -31,11 +30,11 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 row, col = get_from_mouse(pos)
-                piece = board.pick_piece(row, col)
-                board.move(piece, 4, 3)
+                if game.turn == RED:
+                    game.select(row, col)
 
-        board.draw(WIN)
-        pygame.display.update()
+
+        game.update()
 
     pygame.quit()
 
