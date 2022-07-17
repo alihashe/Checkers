@@ -33,12 +33,12 @@ class Game:
             if not result:
                 self.selected = None
                 self.select(row, col)
-        else:
-            piece = self.board.pick_piece(row, col)
-            if piece != 0 and piece.color == self.turn:
-                self.selected = piece
-                self.valid_moves = self.board.find_valid_moves(piece)
-                return True
+        
+        piece = self.board.pick_piece(row, col)
+        if piece != 0 and piece.color == self.turn:
+            self.selected = piece
+            self.valid_moves = self.board.find_valid_moves(piece)
+            return True
         
         return False
 
@@ -47,8 +47,12 @@ class Game:
         piece = self.board.pick_piece(row, col)
         if self.selected and piece == 0 and (row, col) in self.valid_moves:
             self.board.move(self.selected, row, col)
+            skipped = self.valid_moves[(row, col)]
+            if skipped:
+                self.board.remove(skipped)
             self.change_turn()
         else:
+            self.valid_moves = {}
             return False
         
         return True
@@ -61,7 +65,9 @@ class Game:
 
     def change_turn(self):
         """Switches turn between players."""
+        #print(self.turn) # For debug
+        self.valid_moves = {}
         if self.turn == RED:
-            self.turn == WHITE
+            self.turn = WHITE
         else:
-            self.turn == RED
+            self.turn = RED
